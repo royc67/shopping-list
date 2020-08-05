@@ -34,7 +34,7 @@ app.put('/product/:id', (req, res) =>{
     products.forEach((product, index) =>{
         if(product.id === req.params.id){
             products[index] = req.body;
-            res.send(req.body);
+            res.send(product.id + ' updated to ' + req.body);
         };
     });
 });
@@ -49,4 +49,4 @@ app.delete('/product/:id', (req, res) =>{
     })
 
 
-app.listen(8080);
+app.listen(3005);
