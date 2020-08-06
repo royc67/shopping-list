@@ -5,8 +5,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true}));
 
 const products = [
-    {'id': '1', 
-     'name':'cheese'}, 
+    { id: 'tomato', 
+     amount:'4',
+     price: '5'}, 
     {'id': '2',
      'name':'tomato'},
     {'id': '3',
@@ -17,7 +18,7 @@ app.get('/products', (req, res)=> {
     res.send(products);
 });
 
-app.get('/product/:id', (req, res)=>{
+app.get('/products/:id', (req, res)=>{
     for(let product of products){
         if(product.id === req.params.id){
             res.send(product);
@@ -25,12 +26,12 @@ app.get('/product/:id', (req, res)=>{
     };
 });
 
-app.post('/product', (req, res) =>{
+app.post('/products', (req, res) =>{
     products.push(req.body);
     res.send(req.body);
 })
 
-app.put('/product/:id', (req, res) =>{
+app.put('/products/:id', (req, res) =>{
     products.forEach((product, index) =>{
         if(product.id === req.params.id){
             products[index] = req.body;
@@ -39,7 +40,7 @@ app.put('/product/:id', (req, res) =>{
     });
 });
 
-app.delete('/product/:id', (req, res) =>{
+app.delete('/products/:id', (req, res) =>{
     products.forEach((product, i) =>{
         if(product.id === req.params.id){
             products.splice(i, 1);
