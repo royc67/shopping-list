@@ -21,6 +21,9 @@ const makeRow = (id,name) => {
     nameDis.value = name; nameDis.disabled = true;
     const editButton = document.createElement('button')
     editButton.innerHTML = "Edit"
+    editButton.addEventListener('click', (e)=>{
+        
+    })
     const doneButton = document.createElement('button')
     doneButton.innerHTML = "Done"
     doneButton.style.display = "none";
