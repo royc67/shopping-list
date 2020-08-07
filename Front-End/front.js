@@ -3,53 +3,48 @@ const inputProduct = document.getElementById('inputProduct')
 const addButton = document.getElementById('addButton')
 
 async function getProducts() {
+    display.innerHTML = ""
     const {data} = await axios.get(`http://localhost:8080/products`)
         data.forEach((product) => {
-            console.log(product)
             makeRow(product.id, product.name)
         });
     
 }
-addButton.addEventListener('click', ()=>{getProducts()})
+
+getProducts();
 
 const makeRow = (id,name) => {
     const newRow = document.createElement('li')
-    const deleteButton = document.createElement('button')
-    deleteButton.innerHTML = "X";
-    deleteButton.addEventListener('click', ()=>{
-        deleteProduct(id);
-        e.target.parentElement.remove();
-    })
-    const idInput = document.createElement('input')
-    const nameInput = document.createElement('input')
-    idInput.disabled = true
-    idInput.value = id
-    idInput.className = id
-    nameInput.disabled = true
-    nameInput.value = name
-    nameInput.className = id
-    
+    const idDis = document.createElement('input')    
+    idDis.value = id; idDis.disabled = true;
+    const nameDis = document.createElement('input')    
+    nameDis.value = name; nameDis.disabled = true;
     const editButton = document.createElement('button')
-    const doneButton = document.createElement('button')
-    doneButton.style.display = "none";
     editButton.innerHTML = "Edit"
-    const inputs = newRow.getElementsByTagName('input')
-    inputs.disabled = false;
-    newRow.appendChild(idInput)
-    newRow.appendChild(nameInput)
-    newRow.appendChild(doneButton)
+    const doneButton = document.createElement('button')
+    doneButton.innerHTML = "Done"
+    doneButton.style.display = "none";
+    const deleteButton = document.createElement('button')    
+    deleteButton.innerHTML = "X";
+    deleteButton.addEventListener('click',() => {deleteProduct(id)
+        setTimeout(() =>{ display.innerHTML = ""; getProducts() }, 100)
+    })
+
+    newRow.appendChild(idDis)
+    newRow.appendChild(nameDis)
     newRow.appendChild(editButton)
+    newRow.appendChild(doneButton)
     newRow.appendChild(deleteButton)
-    display.appendChild(newRow)
+
+    display.appendChild(newRow)    
 }
 
-
 async function deleteProduct(id) {
-    await axios.delete(`http://localhost:8080/products/${id}`)
+    await axios.delete(`http://localhost:8080/product/${id}`)
 }
 
 async function updateProduct(id,name) {
-    await axios.put(`http://localhost:8080/products${id}`, {id: id, name: name})
+    await axios.put(`http://localhost:8080/product/${id}`, {id: id, name: name})
 }
 
 async function addProduct(id,name) {
@@ -57,5 +52,5 @@ async function addProduct(id,name) {
 }
 
 async function searchProduct(id) {
-    await axios.get(`http://localhost:8080/products${id}`)
+    await axios.get(`http://localhost:8080/product/${id}`)
 }
