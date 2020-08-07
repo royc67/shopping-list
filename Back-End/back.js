@@ -5,12 +5,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true}));
 
 const products = [
-    {'id': '1', 
-     'name':'cheese'}, 
-    {'id': '2',
-     'name':'tomato'},
-    {'id': '3',
-     'name': 'flour'}
+    {'id': '1', 'name':'cheese'}, 
+    {'id': '2','name':'tomato'},
+    {'id': '3','name': 'flour'}
     ];
 
 app.get('/products', (req, res)=> {
