@@ -17,10 +17,26 @@ addButton.addEventListener('click', ()=>{getProducts()})
 const makeRow = (id,name) => {
     const newRow = document.createElement('li')
     const deleteButton = document.createElement('button')
+    const idInput = document.createElement('input')
+    const nameInput = document.createElement('input')
+    idInput.disabled = true
+    idInput.value = id
+    idInput.className = id
+    nameInput.disabled = true
+    nameInput.value = name
+    nameInput.className = id
     deleteButton.innerHTML = "X";
     const editButton = document.createElement('button')
     editButton.innerHTML = "Edit"
-    newRow.innerHTML = `ID: ${id}   Name: ${name}`
+    editButton.addEventListener('click', ()=>{
+        const inputs = document.getElementsByClassName(id)
+        inputs[0].disabled = false;
+        inputs[1].disabled = false;
+    })
+    const inputs = newRow.getElementsByTagName('input')
+    inputs.disabled = false;
+    newRow.appendChild(idInput)
+    newRow.appendChild(nameInput)
     newRow.appendChild(editButton)
     newRow.appendChild(deleteButton)
     display.appendChild(newRow)
