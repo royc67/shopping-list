@@ -57,7 +57,13 @@ const makeRow = (id,name) => {
     display.appendChild(newRow)    
 }
 
-addButton.addEventListener('click', addProduct(inputProduct.value))
+addButton.addEventListener('click', ()=>{
+    if (inputProduct.value != "") {
+        addProduct(inputProduct.value)
+    inputProduct.value = "";
+    setTimeout(() =>{ display.innerHTML = ""; getProducts() }, 100)
+    }
+})
 
 async function deleteProduct(id) {
     await axios.delete(`http://localhost:8080/product/${id}`)

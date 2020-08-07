@@ -35,7 +35,7 @@ app.get('/product/:id', (req, res)=>{
 
 app.post('/product', (req, res) =>{
     maxID ++;
-    products.push({'id': maxID.toString(),'name': req.params.name});
+    products.push({'id': maxID.toString(),'name': req.body.name});
     res.send(products[products.length-1]);
 })
 
