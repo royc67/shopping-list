@@ -4,11 +4,18 @@ const addButton = document.getElementById('addButton')
 
 async function getProducts() {
     display.innerHTML = ""
+    const newRow = document.createElement('li')
+    const idDis = document.createElement('input')    
+    idDis.value = "Product ID"; idDis.disabled = true; 
+    const nameDis = document.createElement('input')    
+    nameDis.value = "ProductName"; nameDis.disabled = true; 
+    newRow.appendChild(idDis)
+    newRow.appendChild(nameDis)
+    display.appendChild(newRow)
     const {data} = await axios.get(`http://localhost:8080/products`)
         data.forEach((product) => {
             makeRow(product.id, product.name)
         });
-    
 }
 
 getProducts();
@@ -21,12 +28,20 @@ const makeRow = (id,name) => {
     nameDis.value = name; nameDis.disabled = true;
     const editButton = document.createElement('button')
     editButton.innerHTML = "Edit"
-    editButton.addEventListener('click', (e)=>{
-        
-    })
     const doneButton = document.createElement('button')
     doneButton.innerHTML = "Done"
     doneButton.style.display = "none";
+    editButton.addEventListener('click', (e)=>{
+        nameDis.disabled = false;
+        editButton.style.display = "none"
+        doneButton.style.display = "inline"
+    })
+    doneButton.addEventListener('click', (e)=>{
+        nameDis.disabled = true;
+        editButton.style.display = "inline"
+        doneButton.style.display = "none"
+        updateProduct(idDis.value, nameDis.value)
+    })
     const deleteButton = document.createElement('button')    
     deleteButton.innerHTML = "X";
     deleteButton.addEventListener('click',() => {deleteProduct(id)
@@ -42,6 +57,8 @@ const makeRow = (id,name) => {
     display.appendChild(newRow)    
 }
 
+addButton.addEventListener('click', addProduct(inputProduct.value))
+
 async function deleteProduct(id) {
     await axios.delete(`http://localhost:8080/product/${id}`)
 }
@@ -50,8 +67,8 @@ async function updateProduct(id,name) {
     await axios.put(`http://localhost:8080/product/${id}`, {id: id, name: name})
 }
 
-async function addProduct(id,name) {
-    await axios.post(`http://localhost:8080/products`, {id: id, name: name})
+async function addProduct(name) {
+    await axios.post(`http://localhost:8080/product`, {'name': name})
 }
 
 async function searchProduct(id) {

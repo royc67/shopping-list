@@ -16,6 +16,10 @@ const products = [
     {'id': '9','name':'i'},
     {'id': '10','name': 'j'}
     ];
+maxID = 1;
+for (let index = 0; index < products.length-1; index++) {
+    maxID = Math.max(products[index].id,products[index+1].id);
+}
 
 app.get('/products', (req, res)=> {
     res.send(products);
@@ -30,8 +34,9 @@ app.get('/product/:id', (req, res)=>{
 });
 
 app.post('/product', (req, res) =>{
-    products.push(req.body);
-    res.send(req.body);
+    maxID ++;
+    products.push({'id': maxID.toString(),'name': req.params.name});
+    res.send(products[products.length-1]);
 })
 
 app.put('/product/:id', (req, res) =>{
