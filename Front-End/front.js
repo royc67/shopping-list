@@ -19,6 +19,7 @@ async function getProducts() {
 }
 
 getProducts();
+inputProduct.focus();
 
 const makeRow = (id,name) => {
     const newRow = document.createElement('li')
@@ -35,12 +36,15 @@ const makeRow = (id,name) => {
         nameDis.disabled = false;
         editButton.style.display = "none"
         doneButton.style.display = "inline"
+        nameDis.focus();
     })
     doneButton.addEventListener('click', (e)=>{
         nameDis.disabled = true;
         editButton.style.display = "inline"
         doneButton.style.display = "none"
         updateProduct(idDis.value, nameDis.value)
+        inputProduct.focus();
+        
     })
     const deleteButton = document.createElement('button')    
     deleteButton.innerHTML = "X";
@@ -57,12 +61,20 @@ const makeRow = (id,name) => {
     display.appendChild(newRow)    
 }
 
-addButton.addEventListener('click', ()=>{
+function addItem() {
     if (inputProduct.value != "") {
         addProduct(inputProduct.value)
     inputProduct.value = "";
     setTimeout(() =>{ display.innerHTML = ""; getProducts() }, 100)
     }
+    inputProduct.focus();
+}
+
+addButton.addEventListener('click', () => {addItem()})
+
+inputProduct.addEventListener('keypress', (e)=>{
+    if (e.keyCode ==13) 
+        addItem();
 })
 
 async function deleteProduct(id) {
